@@ -1,3 +1,10 @@
+# This file defines the security groups for the WordPress application and RDS database.
+# It creates a security group for the WordPress EC2 instance that allows HTTP and SSH access 
+# from specified sources. It also creates a security group for the RDS database that allows
+# MySQL access only from the WordPress security group. This setup ensures that the EC2
+# instance can communicate with the RDS database securely while restricting access to the
+# database to only the WordPress instance. 
+
 resource "aws_security_group" "wordpress" {
   name        = "${var.project_name}-wp-sg"
   description = "WordPress EC2 SG"

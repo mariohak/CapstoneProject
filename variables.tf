@@ -1,3 +1,11 @@
+# This file defines the input variables for the Terraform configuration,
+# including project name, AWS region, availability zones, VPC CIDR block,
+# subnet CIDR blocks, instance type, key pair name, SSH ingress CIDR,
+# database name, username, password, instance class, and Multi-AZ setting.
+# These variables allow for customization of the infrastructure deployment,
+# making it flexible and adaptable to different environments and requirements.
+
+
 variable "project_name" {
   type    = string
   default = "capstone-project"

@@ -1,3 +1,12 @@
+# This script is designed to set up a WordPress environment on an Amazon Linux 2 instance. 
+# It performs the following tasks:
+# 1. Updates the system packages. 
+# 2. Enables PHP 7.4, installs necessary packages (httpd, php, mariadb, etc.), and starts the HTTPD service.
+# 3. Downloads and extracts the latest WordPress package.
+# 4. Configures WordPress by copying the sample config file and updating database credentials.
+# 5. Waits for the MariaDB database to be ready before proceeding.
+# 6. Creates a marker file to indicate that the installation is complete.
+
 #!/bin/bash
 set -euo pipefail
 

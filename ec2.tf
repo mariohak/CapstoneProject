@@ -1,11 +1,11 @@
-// This file defines the EC2 instance for the WordPress application, 
-// including its configuration and user data script.
+# This file defines the EC2 instance for the WordPress application, 
+# including its configuration and user data script.
 
 locals {
   rds_host = replace(aws_db_instance.mysql.endpoint, ":3306", "")
 }
 
-// Create an EC2 instance for the WordPress application
+# Create an EC2 instance for the WordPress application
 
 resource "aws_instance" "wordpress" {
   ami                         = data.aws_ssm_parameter.al2_ami.value
@@ -15,7 +15,7 @@ resource "aws_instance" "wordpress" {
   vpc_security_group_ids      = [aws_security_group.wordpress.id]
   key_name                    = var.key_pair_name
 
-// Use a user data script to install and configure WordPress on the EC2 instance
+# Use a user data script to install and configure WordPress on the EC2 instance
 
 
   user_data = templatefile("${path.module}/userdata/wordpress.sh.tpl", {
