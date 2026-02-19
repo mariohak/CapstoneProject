@@ -1,0 +1,46 @@
+#!/bin/bash
+set -euo pipefail
+
+DB_HOST="${DB_HOST}"
+DB_NAME="${DB_NAME}"
+DB_USER="${DB_USER}"
+DB_PASS="${DB_PASS}"
+
+MARKER="/var/local/wp_installed"
+if [ -f "$MARKER" ]; then
+  exit 0
+fi
+
+yum update -y
+amazon-linux-extras enable php7.4 >/dev/null 2>&1 || true
+yum clean metadata -y
+yum install -y httpd php php-mysqlnd php-gd php-xml php-mbstring php-json php-zip unzip wget mariadb
+
+systemctl enable httpd
+systemctl start httpd
+
+cd /tmp
+wget -q https://wordpress.org/latest.tar.gz
+tar -xzf latest.tar.gz
+
+rm -rf /var/www/html/*
+cp -r wordpress/* /var/www/html/
+
+chown -R apache:apache /var/www/html
+chmod -R 755 /var/www/html
+
+cp /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
+
+sed -i "s/database_name_here/$DB_NAME/" /var/www/html/wp-config.php
+sed -i "s/username_here/$DB_USER/" /var/www/html/wp-config.php
+sed -i "s/password_here/$DB_PASS/" /var/www/html/wp-config.php
+sed -i "s/localhost/$DB_HOST/" /var/www/html/wp-config.php
+
+for i in {1..60}; do
+  if mysql -h "$DB_HOST" -u "$DB_USER" -p"$DB_PASS" -e "SELECT 1;" >/dev/null 2>&1; then
+    break
+  fi
+  sleep 5
+done
+
+touch "$MARKER"
