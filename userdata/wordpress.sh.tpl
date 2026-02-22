@@ -1,3 +1,6 @@
+#!/bin/bash
+set -euo pipefail
+
 # This script is designed to set up a WordPress environment on an Amazon Linux 2 instance. 
 # It performs the following tasks:
 # 1. Updates the system packages. 
@@ -7,8 +10,7 @@
 # 5. Waits for the MariaDB database to be ready before proceeding.
 # 6. Creates a marker file to indicate that the installation is complete.
 
-#!/bin/bash
-set -euo pipefail
+
 
 DB_HOST="${DB_HOST}"
 DB_NAME="${DB_NAME}"
