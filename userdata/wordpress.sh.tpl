@@ -23,7 +23,7 @@ if [ -f "$MARKER" ]; then
 fi
 
 yum update -y
-amazon-linux-extras enable php7.4 >/dev/null 2>&1 || true
+amazon-linux-extras enable php8.3 >/dev/null 2>&1 || true
 yum clean metadata -y
 yum install -y httpd php php-mysqlnd php-gd php-xml php-mbstring php-json php-zip unzip wget mariadb
 
