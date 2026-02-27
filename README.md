@@ -156,6 +156,7 @@ The application is fully functional immediately after infrastructure deployment.
 terraform init
 terraform plan
 terraform apply
+```
 
 Alternatively, deployment is triggered automatically via Terraform Cloud upon GitHub push.
 
